@@ -1,6 +1,7 @@
 import random
 import getpass
 import kivy
+import time
 
 print("BIENVENUE DANS PierrePapierCiseau")
 print("(1 = Pierre) (2 = Papier) (3 = Ciseaux)")
@@ -62,38 +63,65 @@ if Partie_Mod == 1:
     DMD = "o"
     pieces_V = 0
 
-    while DMD != "n": 
+    while DMD != "n":
+        
+        if pieces_V >= 50:
+                print("Tu as gagnés un cadeau (Tu peux voir le choix de ton adversaire)")
+                recompense = str(input("Veut tu dépenser 50 pièces pour ton cadeau ( o = oui ; n = non ) ???"))
+        
+        time.sleep(1)
+        
         nbr_de_partie = int(input("Combien de partie souhaitez-vous jouer ? "))
+        
+        time.sleep(1)
+        
         for _ in range(nbr_de_partie):
             choix_utilisateur = input("Choisissez pierre(1), papier(2) ou ciseaux(3) : ").lower()
             choix_ordinateur = random.choice(options)
+            recompense = 'n'
+            
+            time.sleep(1)
+            
+            if recompense == 'o':
+                pieces_V -= 50
+                print(choix_ordinateur)
+                
+            else:    
+                if choix_utilisateur == choix_ordinateur:
+                    print("EGALITE")
+                    pieces_V += 5
 
-            if choix_utilisateur == choix_ordinateur:
-                print("EGALITE")
-                pieces_V += 5
+                elif (choix_utilisateur == "1" and choix_ordinateur == "3")or\
+                        (choix_utilisateur == "3" and choix_ordinateur == "2")or\
+                    (choix_utilisateur == "2" and choix_ordinateur == "1"):
+                    print("GAGNE!!!")
+                    pieces_V += 10
+                    nbr_de_partie_gagner += 1
+                else:
+                    print("PERDU!!!")
+                    pieces_V -= 3
+                    nbr_de_partie_perdu += 1
+                    
+                time.sleep(1)
 
-            elif (choix_utilisateur == "1" and choix_ordinateur == "3")or\
-                (choix_utilisateur == "3" and choix_ordinateur == "2")or\
-                (choix_utilisateur == "2" and choix_ordinateur == "1"):
-                print("GAGNE!!!")
-                pieces_V += 10
-                nbr_de_partie_gagner += 1
-            else:
-                print("PERDU!!!")
-                pieces_V -= 3
-                nbr_de_partie_perdu += 1
-
-            print("L'adversaire a choisi", choix_ordinateur)
-            print("Nombre de parties gagnées :", nbr_de_partie_gagner)
-            print("Nombre de parties perdues :", nbr_de_partie_perdu)
-
-        print("Tu as gagné",pieces_V,"pièces")
+                print("L'adversaire a choisi", choix_ordinateur)
+                
+                time.sleep(1)
+                
+                print("Nombre de parties gagnées :", nbr_de_partie_gagner)
+                print("Nombre de parties perdues :", nbr_de_partie_perdu)
+                
+                time.sleep(1)
+                
+            print("Tu as gagné",pieces_V,"pièces")
+            
+            time.sleep(1)
 
         DMD = str(input("Voulez vous jouer une autre manche ? o/n "))
     
-    if nbr_de_partie_gagner>nbr_de_partie_perdu:
-        print("Tu as gagné !!!")
-    elif nbr_de_partie_gagner<nbr_de_partie_perdu:
-        print("Perdu !!!")
-    else:
-        print("Egalité !!!")
+        if nbr_de_partie_gagner>nbr_de_partie_perdu:
+            print("Tu as gagné !!!")
+        elif nbr_de_partie_gagner<nbr_de_partie_perdu:
+            print("Perdu !!!")
+        else:
+            print("Egalité !!!")
