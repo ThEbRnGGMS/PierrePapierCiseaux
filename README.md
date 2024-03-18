@@ -1,3 +1,1 @@
 # PierrePapierCiseaux
-
-ATTENTION PROBLEME AVEC RECOMPENSE !!!
