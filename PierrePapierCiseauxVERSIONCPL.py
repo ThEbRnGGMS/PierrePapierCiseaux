@@ -3,16 +3,23 @@ import getpass
 import kivy
 import time
 
+print(" ")
+
 print("BIENVENUE DANS PierrePapierCiseau")
+
+print(" ")
+
 print("(1 = Pierre) (2 = Papier) (3 = Ciseaux)")
 
-Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2)"))
+print(" ")
+
+Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2) : "))
 
 if Partie_Mod > 2:
     print("Choix incorrect")
     Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2)"))
     
-    
+
     
 options = ("1", "2", "3")
 nbr_de_partie_gagner = 0
@@ -71,9 +78,13 @@ if Partie_Mod == 2:
             print(f"{gagnant.capitalize()} gagne cette manche !")
         
         DMD = str(input("Voulez vous jouer une autre manche ? o/n "))
+        
         if(DMD == 'n'):
             break
-             
+        
+        if DMD != 'o' or 'n':
+            print("choix incorrect")
+            DMD = str(input("Voulez vous jouer une autre manche ? o/n "))     
 
     print("Merci d'avoir joué !")
 
@@ -126,17 +137,27 @@ if Partie_Mod == 1:
             print("L'adversaire a choisi", choix_ordinateur)
                 
             time.sleep(1)
-                
+            
+            print(" ")
+            
             print("Nombre de parties gagnées :", nbr_de_partie_gagner)
             print("Nombre de parties perdues :", nbr_de_partie_perdu)
+            
+            print(" ")
             
             time.sleep(1)
                 
             print("Tu as gagné",pieces_V,"pièces")
             
+            print("  ")
+            
             time.sleep(1)
 
         DMD = str(input("Voulez vous jouer une autre manche ? o/n "))
+        
+        if DMD != 'o' or 'n':
+            print("choix incorrect")
+            DMD = str(input("Voulez vous jouer une autre manche ? o/n "))
         
         if DMD == 'o':
             print(" ")
@@ -148,5 +169,7 @@ if Partie_Mod == 1:
                 print("Perdu !!!")
             else:
                 print("Egalité !!!")
+            
+            print(" ")
             
             break
