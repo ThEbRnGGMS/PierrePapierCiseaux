@@ -8,11 +8,32 @@ print("(1 = Pierre) (2 = Papier) (3 = Ciseaux)")
 
 Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2)"))
 
+if Partie_Mod > 2:
+    print("Choix incorrect")
+    Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2)"))
+    
+    
+    
 options = ("1", "2", "3")
 nbr_de_partie_gagner = 0
 nbr_de_partie_perdu = 0
 
+def rec(pieces_V, recompense):
+    
+    if pieces_V >= 20:
+        print("Tu as gagnés un cadeau (Tu peux voir le choix de ton adversaire)")
+        recompense = str(input("Veut tu dépenser 20 pièces pour ton cadeau ( o = oui ; n = non ) ???"))
+        
+        if recompense != 'o' or 'n':
+            print("choix incorrect")
+            recompense = str(input("Veut tu dépenser 20 pièces pour ton cadeau ( o = oui ; n = non ) ???"))
+    
+    if recompense == 'o':
+        pieces_V -= 20
+        print("L'adversaire va choisir",choix_ordinateur)
+
 if Partie_Mod == 2:
+  
   def demander_nom_joueur(numero):
      return input(f"Joueur {numero}, veuillez entrer votre nom : ")
   
@@ -60,14 +81,12 @@ if Partie_Mod == 2:
     main()
 
 if Partie_Mod == 1:
-    DMD = "o"
+    
     pieces_V = 0
+    DMD = "o"
+    recompense = 'n'
 
     while DMD != "n":
-        
-        if pieces_V >= 50:
-                print("Tu as gagnés un cadeau (Tu peux voir le choix de ton adversaire)")
-                recompense = str(input("Veut tu dépenser 50 pièces pour ton cadeau ( o = oui ; n = non ) ???"))
         
         time.sleep(1)
         
@@ -76,18 +95,16 @@ if Partie_Mod == 1:
         time.sleep(1)
         
         for _ in range(nbr_de_partie):
-            choix_utilisateur = input("Choisissez pierre(1), papier(2) ou ciseaux(3) : ").lower()
+            
             choix_ordinateur = random.choice(options)
-            
-            recompense = 'n'
-            
-            if recompense == 'o':
-                pieces_V -= 50
-                print(choix_ordinateur)
-                
-            
+            rec(pieces_V, recompense)
+            choix_utilisateur = input("Choisissez pierre(1), papier(2) ou ciseaux(3) : ").lower()
             
             time.sleep(1)
+            
+            if choix_utilisateur > '3':
+                print("choix incorrect")
+                choix_utilisateur = input("Choisissez pierre(1), papier(2) ou ciseaux(3) : ").lower()
             
             if choix_utilisateur == choix_ordinateur:
                 print("EGALITE")
@@ -131,5 +148,5 @@ if Partie_Mod == 1:
                 print("Perdu !!!")
             else:
                 print("Egalité !!!")
-
+            
             break
