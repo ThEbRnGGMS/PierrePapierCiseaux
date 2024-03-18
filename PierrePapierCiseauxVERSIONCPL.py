@@ -2,6 +2,7 @@ import random
 import getpass
 import kivy
 import time
+import threading
 
 print(" ")
 
@@ -13,13 +14,20 @@ print("(1 = Pierre) (2 = Papier) (3 = Ciseaux)")
 
 print(" ")
 
-Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2) : "))
+Partie_Mod = int(input("1V1 contre bot(Tape 1), contre un ami(Tape 2) ou contre la montre (Tape 3)   : "))
 
-if Partie_Mod > 2:
+def chrono():
+    time.sleep(5)
+    print("Temps écoulé ! Vous avez perdu.")
+    return
+
+def jeu_chrono():
+    print("Vous avez 5 secondes pour faire votre choix à chaque tour.")
+    print("Prêt ? C'est parti !")
+
+if Partie_Mod > 3:
     print("Choix incorrect")
-    Partie_Mod = int(input("1V1 contre bot(Tape 1) ou contre un ami(Tape 2)"))
-    
-
+    Partie_Mod = int(input("1V1 contre bot(Tape 1), contre un ami(Tape 2) ou contre la montre (Tape 3)"))
     
 options = ("1", "2", "3")
 nbr_de_partie_gagner = 0
@@ -173,3 +181,86 @@ if Partie_Mod == 1:
             print(" ")
             
             break
+
+if Partie_Mod == 3:
+    
+    nbr_de_partie = int(input("Combien de partie souhaitez-vous jouer ? "))
+    
+    print("Vous avez 5 secondes pour répondre")
+    
+    DMD = "o"
+    recompense = 'n'
+
+    while DMD != "n":
+        
+        for _ in range(nbr_de_partie):
+            
+            choix_ordinateur = random.choice(options)
+            
+            while True:
+                choix_fait = False
+                chrono_thread = threading.Thread(target=chrono)
+                chrono_thread.start()
+            
+                if choix_fait:
+                    chrono_thread.join()
+            
+                choix_utilisateur = input("Choisissez pierre(1), papier(2) ou ciseaux(3) : ").lower()
+                
+                choix_fait = True
+                
+                time.sleep(1)
+                
+                if choix_utilisateur > '3':
+                    print("choix incorrect")
+                    choix_utilisateur = input("Choisissez pierre(1), papier(2) ou ciseaux(3) : ").lower()
+                
+                if choix_utilisateur == choix_ordinateur:
+                    print("EGALITE")
+
+                elif (choix_utilisateur == "1" and choix_ordinateur == "3")or\
+                    (choix_utilisateur == "3" and choix_ordinateur == "2")or\
+                    (choix_utilisateur == "2" and choix_ordinateur == "1"):
+                    print("GAGNE!!!")
+                    nbr_de_partie_gagner += 1
+                else:
+                    print("PERDU!!!")
+                    nbr_de_partie_perdu += 1
+                        
+                time.sleep(1)
+
+                print("L'adversaire a choisi", choix_ordinateur)
+                    
+                time.sleep(1)
+                
+                print(" ")
+                
+                print("Nombre de parties gagnées :", nbr_de_partie_gagner)
+                print("Nombre de parties perdues :", nbr_de_partie_perdu)
+                
+                print(" ")
+                
+                time.sleep(1)
+
+                DMD = str(input("Voulez vous jouer une autre manche ? o/n "))
+                
+                if DMD != 'o' or 'n':
+                    print("choix incorrect")
+                    DMD = str(input("Voulez vous jouer une autre manche ? o/n "))
+                
+                if DMD == 'o':
+                    print(" ")
+                
+                while DMD == 'n':
+                    if nbr_de_partie_gagner>nbr_de_partie_perdu:
+                        print("Tu as gagné !!!")
+                    elif nbr_de_partie_gagner<nbr_de_partie_perdu:
+                        print("Perdu !!!")
+                    else:
+                        print("Egalité !!!")
+                    
+                    print(" ")
+                    
+                    break
+                    
+                jeu_chrono()
